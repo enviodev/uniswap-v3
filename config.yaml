@@ -1,0 +1,45 @@
+name: Factory
+description: Uniswap is a decentralized protocol for automated token exchange on Ethereum.
+schema: null
+networks:
+- id: 1
+  start_block: 0
+  contracts:
+  - name: Factory
+    abi_file_path: ./abis/factory.json
+    handler: ./src/EventHandlers.bs.js
+    address:
+    - 0x1F98431c8aD98523631AE4a59f267346ea31F984
+    events:
+    - event: PoolCreated
+      requiredEntities:
+      - name: Factory
+        labels: ["factory"]
+      - name: Token
+        labels: ["token0", "token1"]
+  - name: NonfungiblePositionManager
+    abi_file_path: ./abis/NonfungiblePositionManager.json
+    handler: ./src/EventHandlers.bs.js
+    address:
+    - 0xC36442b4a4522E871399CD717aBDD847Ab11FE88
+    events:
+    - event: IncreaseLiquidity
+      requiredEntities: []
+    - event: DecreaseLiquidity
+      requiredEntities: []
+    - event: Collect
+      requiredEntities: []
+    - event: Transfer
+      requiredEntities: []
+  - name: Pool
+    abi_file_path: ./abis/pool.json
+    handler: ./src/Core.bs.js
+    # entities:
+    #  - Pool
+    #  - Token
+    events:
+    - event: Initialize
+    - event: Swap
+    - event: Mint
+    - event: Burn
+    - event: Flash
